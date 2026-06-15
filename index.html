@@ -67,7 +67,7 @@
   .nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
   .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.92rem;letter-spacing:.02em;display:flex;align-items:center;gap:9px;}
   .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--online);box-shadow:0 0 0 4px rgba(26,158,107,.15);}
-  .nav-links{display:flex;gap:26px;align-items:center;}
+  .nav-links{display:flex;gap:22px;align-items:center;}
   .nav-links a{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-soft);transition:color .15s;}
   .nav-links a:hover{color:var(--ink);}
   .nav-cta{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--signal);border:1px solid var(--line-strong);padding:7px 13px;border-radius:8px;transition:.15s;}
@@ -127,8 +127,6 @@
   .proj{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px 26px 24px;display:flex;flex-direction:column;transition:.18s;}
   .proj:hover{border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 14px 34px -22px rgba(17,21,28,.4);}
   .proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px;}
-  .proj-status{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.08em;color:var(--online);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
-  .proj-status .d{width:7px;height:7px;border-radius:50%;background:var(--online);}
   .proj h3{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.16rem;margin:0 0 10px;letter-spacing:-.01em;line-height:1.15;}
   .proj p{margin:0 0 18px;font-size:.92rem;color:var(--ink-soft);line-height:1.56;flex:1;}
   .stack{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
@@ -167,6 +165,11 @@
   .ach-item .mk{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--signal);font-weight:600;flex-shrink:0;width:46px;}
   .ach-item .tx{font-size:.96rem;color:var(--ink);line-height:1.5;}
   .ach-item .tx small{display:block;color:var(--ink-soft);font-size:.85rem;margin-top:2px;}
+  .ach-item .verify{display:inline-flex;align-items:center;gap:5px;color:var(--signal);font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:500;white-space:nowrap;border-bottom:1px solid transparent;transition:border-color .15s;}
+  .ach-item .verify:hover{border-bottom-color:var(--signal);}
+  .ach-item .verify .ok{color:var(--online);font-size:.7em;}
+  .ach-item .verify svg{width:11px;height:11px;transition:transform .15s;}
+  .ach-item .verify:hover svg{transform:translate(1px,-1px);}
   .edu-item{padding:18px 0;border-bottom:1px solid var(--line);}
   .edu-item:last-child{border-bottom:none;}
   .edu-item .deg{font-family:"Archivo",sans-serif;font-stretch:106%;font-weight:700;font-size:1.06rem;letter-spacing:-.01em;margin-bottom:3px;}
@@ -188,6 +191,79 @@
   @media(max-width:560px){.contact-rows{grid-template-columns:1fr;}}
   .foot{border-top:1px solid var(--panel-line);margin-top:54px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:#6E7A8E;}
 
+  /* ---------- open source / replications ---------- */
+  .repo-intro{font-size:clamp(1.02rem,1.9vw,1.18rem);max-width:720px;line-height:1.6;margin:0 0 14px;color:var(--ink);}
+  .repo-intro b{font-weight:600;color:var(--signal);}
+  .repo-repolink{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--signal);font-weight:500;display:inline-flex;align-items:center;gap:8px;margin-bottom:40px;}
+  .repo-repolink svg{width:15px;height:15px;}
+  .repo-cluster{margin-top:34px;}
+  .repo-cluster:first-of-type{margin-top:0;}
+  .ckey{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .ckey::after{content:"";flex:1;height:1px;background:var(--line);}
+  .repo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .repo-card{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:20px 20px 18px;display:flex;flex-direction:column;transition:.16s;}
+  .repo-card:hover{border-color:var(--line-strong);transform:translateY(-2px);}
+  .repo-tag{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);margin-bottom:9px;}
+  .repo-card h4{font-family:"Archivo",sans-serif;font-stretch:106%;font-weight:700;font-size:1.02rem;letter-spacing:-.01em;margin:0 0 8px;line-height:1.2;}
+  .repo-card p{margin:0 0 15px;font-size:.86rem;color:var(--ink-soft);line-height:1.5;flex:1;}
+  .repo-links{display:flex;flex-wrap:wrap;gap:6px 16px;}
+  .repo-links a{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--signal);font-weight:500;display:inline-flex;align-items:center;gap:6px;}
+  .repo-links a svg{width:12px;height:12px;transition:transform .15s;}
+  .repo-links a:hover svg{transform:translate(2px,-2px);}
+  @media(max-width:880px){.repo-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.repo-grid{grid-template-columns:1fr;}}
+
+  /* ---------- featured contribution ---------- */
+  .contrib{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-columns:1.55fr 1fr;}
+  .contrib-main{padding:34px 34px 28px;}
+  .contrib .eyebrow a{color:var(--signal);border-bottom:1px solid rgba(37,54,222,.3);}
+  .contrib h3{font-family:"Archivo",sans-serif;font-stretch:110%;font-weight:700;font-size:clamp(1.35rem,2.6vw,1.9rem);letter-spacing:-.02em;line-height:1.12;margin:14px 0 14px;}
+  .contrib-p{font-size:1rem;color:var(--ink);line-height:1.6;margin:0 0 20px;}
+  .contrib-p b{font-weight:600;}
+  .contrib-high{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:11px;}
+  .contrib-high li{position:relative;padding-left:24px;font-size:.93rem;color:var(--ink-soft);line-height:1.55;}
+  .contrib-high li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:2px;background:var(--signal);}
+  .contrib-meta{display:flex;flex-wrap:wrap;gap:8px 14px;padding-top:18px;border-top:1px solid var(--line);margin-bottom:18px;}
+  .contrib-meta span{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);}
+  .contrib-meta span.ok{color:var(--online);}
+  .contrib-links{display:flex;flex-wrap:wrap;gap:12px;}
+  .contrib-links a{display:inline-flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:500;padding:10px 15px;border-radius:9px;transition:.16s;}
+  .contrib-links a.primary{background:var(--signal);color:#fff;}
+  .contrib-links a.primary:hover{background:var(--signal-deep);transform:translateY(-1px);}
+  .contrib-links a.ghost{border:1px solid var(--line-strong);color:var(--ink);}
+  .contrib-links a.ghost:hover{border-color:var(--ink);transform:translateY(-1px);}
+  .contrib-links a svg{width:14px;height:14px;}
+  .contrib-aside{background:var(--panel);color:#E8ECF3;padding:30px 28px;display:flex;flex-direction:column;gap:16px;}
+  .map-block .akey{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:#8FA0FF;margin-bottom:6px;}
+  .map-block .aval{font-size:.9rem;line-height:1.45;color:#E8ECF3;}
+  .map-block .aval b{color:#fff;font-weight:600;}
+  .map-arrow{color:#3A465E;font-size:1.1rem;line-height:1;text-align:center;margin:-4px 0;}
+  .contrib-aside .status{margin-top:auto;display:inline-flex;align-items:center;gap:9px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:#fff;border:1px solid var(--panel-line);border-radius:8px;padding:8px 12px;align-self:flex-start;}
+  .contrib-aside .status .d{width:8px;height:8px;border-radius:50%;background:var(--online);}
+  @media(max-width:860px){.contrib{grid-template-columns:1fr;}.contrib-main{border-bottom:1px solid var(--line);}}
+
+  /* ---------- TA course chips ---------- */
+  .ta-courses{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .ta-course{display:inline-flex;align-items:baseline;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:.86rem;line-height:1.25;}
+  .ta-course b{font-weight:600;color:var(--ink);}
+  .ta-course .t{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.03em;color:var(--ink-faint);}
+
+  /* ---------- hero portrait ---------- */
+  .hero-top{display:grid;grid-template-columns:minmax(0,1fr) clamp(220px,27vw,326px);gap:clamp(30px,5vw,60px);align-items:center;margin-bottom:36px;}
+  .hero-head{min-width:0;}
+  .hero-head .hero-thesis{margin-bottom:0;}
+  .hero-portrait{position:relative;}
+  .portrait-frame{position:relative;width:100%;aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:1px solid var(--line-strong);background:var(--panel);box-shadow:0 26px 60px -32px rgba(17,21,28,.55);display:flex;align-items:center;justify-content:center;}
+  .portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .portrait-initials{font-family:"Archivo",sans-serif;font-stretch:115%;font-weight:800;font-size:clamp(3rem,7vw,4.2rem);letter-spacing:-.02em;color:#33405E;}
+  .portrait-tag{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:13px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-soft);}
+  .portrait-tag .pulse{width:8px;height:8px;border-radius:50%;background:var(--online);}
+  @media(max-width:760px){
+    .hero-top{grid-template-columns:1fr;gap:24px;margin-bottom:30px;}
+    .hero-portrait{order:-1;max-width:200px;}
+    .portrait-tag{justify-content:flex-start;}
+  }
+
   /* reduced motion */
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
   :focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px;}
@@ -198,10 +274,12 @@
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="#top" class="brand"><span class="dot"></span>mohammad_elsharqawy</a>
+    <a href="#top" class="brand"><span class="dot"></span>Mohammad Elsharqawy</a>
     <nav class="nav-links">
       <a href="#research">research</a>
       <a href="#work">work</a>
+      <a href="#contribution">contribution</a>
+      <a href="#replications">replications</a>
       <a href="#experience">experience</a>
       <a href="#stack">stack</a>
       <a href="#contact">contact</a>
@@ -215,9 +293,22 @@
 <!-- ============ HERO ============ -->
 <div class="wrap">
 <section class="hero">
+  <div class="hero-top">
+  <div class="hero-head">
   <div class="hero-status"><span class="pulse"></span>Seeking PhD position · Systems &amp; Reliability · 2026 cycle</div>
   <h1 class="display">Mohammad<br>Elsharqawy</h1>
   <p class="hero-thesis">I build and study systems that <b>stay up</b>. My work sits where DevOps practice meets systems research — the <b>reliability</b> of cloud-scale infrastructure, and the emerging question of how autonomous agents can <b>operate and repair</b> it.</p>
+  </div><!-- /hero-head -->
+
+  <aside class="hero-portrait">
+    <div class="portrait-frame">
+      <span class="portrait-initials">ME</span>
+      <!-- PHOTO: drop a file named  Mohammad_Elsharqawy.jpg  in the same folder as index.html -->
+      <img src="Mohammad_Elsharqawy.jpg" alt="Mohammad Elsharqawy" onerror="this.style.display='none'">
+    </div>
+    <div class="portrait-tag"><span class="pulse"></span>Based in Egypt</div>
+  </aside>
+  </div><!-- /hero-top -->
 
   <svg class="heartbeat" viewBox="0 0 640 46" preserveAspectRatio="none" aria-hidden="true">
     <path class="base" d="M0 23 H640"/>
@@ -230,12 +321,12 @@
     </a>
     <a href="mailto:mohammadelsharqawyegy@gmail.com" class="btn btn-ghost">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a>
-    <!-- TODO: replace # with your GitHub URL -->
-    <a href="#" class="btn btn-ghost">
+    <a href="https://github.com/MohammadElsharqawy" target="_blank" rel="noopener" class="btn btn-ghost">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>GitHub</a>
-    <!-- TODO: replace # with your LinkedIn URL -->
-    <a href="#" class="btn btn-ghost">
+    <a href="https://www.linkedin.com/in/mohammad-elsharqawy-a86991190/" target="_blank" rel="noopener" class="btn btn-ghost">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>LinkedIn</a>
+    <a href="https://leetcode.com/u/__sharq1/" target="_blank" rel="noopener" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M13 7l-2 10"/></svg>LeetCode</a>
   </div>
 
   <div class="telemetry">
@@ -253,7 +344,7 @@
     </div>
     <div class="cell">
       <div class="k">BSc Class Rank</div>
-      <div class="v">4<span style="font-size:.7em">th</span> / 150+<small>Excellent with honors</small></div>
+      <div class="v">4<span style="font-size:.7em">th</span> / 150+<small>Excellent with honors (highest grade possible)</small></div>
     </div>
   </div>
 </section>
@@ -301,7 +392,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>Kubernetes GitOps Deployment</h3>
-        <span class="proj-status"><span class="d"></span>declarative</span>
       </div>
       <p>Containerized a Go application and deployed it to Kubernetes with Argo CD, making Git the single source of truth. Manifests reconcile cluster state automatically — trackable, reproducible, self-healing deployments.</p>
       <div class="stack"><span>Go</span><span>Docker</span><span>Kubernetes</span><span>Argo CD</span><span>Minikube</span></div>
@@ -311,7 +401,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>CI/CD Pipeline — Vprofile</h3>
-        <span class="proj-status"><span class="d"></span>continuous</span>
       </div>
       <p>End-to-end Jenkins pipeline: build and test with Maven, static analysis and quality gates via SonarQube, artifacts in Nexus, versioned images to Docker Hub, and automated delivery to AWS ECS with Slack notifications.</p>
       <div class="stack"><span>Jenkins</span><span>Maven</span><span>SonarQube</span><span>Nexus</span><span>AWS ECS</span></div>
@@ -321,7 +410,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>Microservices on Kubernetes — Weather App</h3>
-        <span class="proj-status"><span class="d"></span>resilient</span>
       </div>
       <p>Multi-service app (UI, auth, weather API, MySQL) on Kubernetes. StatefulSet with persistent volumes for durable data, ConfigMaps/Secrets for config, liveness &amp; readiness probes for zero-downtime, NGINX Ingress with TLS.</p>
       <div class="stack"><span>Kubernetes</span><span>StatefulSet</span><span>Ingress</span><span>MySQL</span><span>TLS</span></div>
@@ -331,7 +419,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>Automated CI/CD &amp; Infra Pipeline</h3>
-        <span class="proj-status"><span class="d"></span>provisioned</span>
       </div>
       <p>Provisioned secure AWS infrastructure with Terraform, then drove it from Jenkins — Ansible reaching private EC2 via a bastion host, EC2 build agents, and a Node.js deployment fronted by an Application Load Balancer.</p>
       <div class="stack"><span>Terraform</span><span>Jenkins</span><span>Ansible</span><span>AWS</span><span>Node.js</span></div>
@@ -341,7 +428,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>AWS Multi-Tier Web App</h3>
-        <span class="proj-status"><span class="d"></span>highly-available</span>
       </div>
       <p>Secure, highly available multi-tier architecture: ALB with end-to-end HTTPS (ACM/TLS), Auto Scaling Tomcat tier, Route 53 private zones for internal service discovery, and tier-isolated security groups over MySQL, Memcached, RabbitMQ.</p>
       <div class="stack"><span>EC2</span><span>ALB</span><span>Auto Scaling</span><span>Route 53</span><span>ACM</span></div>
@@ -351,7 +437,6 @@
     <div class="proj">
       <div class="proj-top">
         <h3>End-to-End Medical Chatbot</h3>
-        <span class="proj-status"><span class="d"></span>deployed</span>
       </div>
       <p>A Flask RAG application for real-time medical Q&amp;A: LangChain pipeline with Sentence-BERT embeddings, Pinecone serverless vector DB, and GPT-4o. Containerized with Docker, hosted on AWS EC2/ECR, shipped via GitHub Actions.</p>
       <div class="stack"><span>LangChain</span><span>Pinecone</span><span>GPT-4o</span><span>Flask</span><span>AWS</span></div>
@@ -362,10 +447,173 @@
 </section>
 </div>
 
+<!-- ============ OPEN-SOURCE CONTRIBUTION (FEATURED) ============ -->
+<div class="wrap">
+<section id="contribution">
+  <div class="sec-head"><span class="num">03</span><h2>Open-source contribution</h2></div>
+
+  <div class="contrib">
+    <div class="contrib-main">
+      <div class="eyebrow"><a href="https://github.com/SREGym/SREGym" target="_blank" rel="noopener">SREGym</a> · agentic-SRE benchmark</div>
+      <h3>Reproducing a real GKE IP-exhaustion outage as a reliability benchmark</h3>
+      <p class="contrib-p">I contributed a new benchmark problem to <b>SREGym</b> — the open benchmark for whether AI agents can resolve production incidents, from Prof. Tianyin Xu&rsquo;s group at UIUC. It faithfully recreates a real-world GKE &ldquo;ran out of IP addresses&rdquo; outage as a reproducible Kubernetes fault, so agents can be scored on diagnosing and mitigating it.</p>
+      <ul class="contrib-high">
+        <li>Engineered a reliable pod IP-exhaustion fault with Calico IPAM — a runtime exhaustible IP pool plus strict affinity — that triggers without any cluster-wide reconfiguration, after iterating through four designs.</li>
+        <li>Made it push-button and safe to re-run: a Kind + Calico setup path and a global cleanup that restores cluster networking even if a run exits mid-fault.</li>
+        <li>Evaluated an LLM agent (Stratus + GPT-5) against the fault, surfaced a cross-namespace reasoning gap, and tuned the mitigation so the agent locates and scales down the offending workload to recover the app.</li>
+      </ul>
+      <div class="contrib-meta">
+        <span>SREGym/SREGym</span><span>Kubernetes</span><span>Calico CNI</span><span>Python</span><span class="ok">● Merged · PR #774</span>
+      </div>
+      <div class="contrib-links">
+        <a class="primary" href="https://github.com/SREGym/SREGym/pull/774" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          View PR #774
+        </a>
+        <a class="ghost" href="https://deploy.live/blog/when-gke-ran-out-of-ip-addresses/" target="_blank" rel="noopener">Read the incident postmortem
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+
+    <aside class="contrib-aside">
+      <div class="map-block">
+        <div class="akey">Real incident</div>
+        <div class="aval"><b>GKE ran out of IPs.</b> A /16 subnet (65,536 addresses) exhausted as nodes pre-allocated IP blocks — the autoscaler could no longer add nodes.</div>
+      </div>
+      <div class="map-arrow">↓</div>
+      <div class="map-block">
+        <div class="akey">Benchmark fault</div>
+        <div class="aval"><b>Calico IP-pool exhaustion.</b> A tiny pool is drained at runtime, leaving Hotel-Reservation pods stuck in <code>ContainerCreating</code> — no cluster changes required.</div>
+      </div>
+      <div class="map-arrow">↓</div>
+      <div class="map-block">
+        <div class="akey">Agent task</div>
+        <div class="aval">Diagnose the outage and mitigate it by finding and scaling down the workload eating the IPs.</div>
+      </div>
+      <div class="status"><span class="d"></span>Merged · first PR to SREGym</div>
+    </aside>
+  </div>
+</section>
+</div>
+
+<!-- ============ OPEN SOURCE / REPLICATIONS ============ -->
+<div class="wrap">
+<section id="replications">
+  <div class="sec-head"><span class="num">04</span><h2>Research replications</h2></div>
+
+  <p class="repo-intro">Implementing foundational papers <b>from scratch</b> in PyTorch — to understand architectures at the level of their equations, not just their APIs — alongside classical AI, systems, and backend work.</p>
+  <a class="repo-repolink" href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+    github.com/MohammadElsharqawy/Paper-Replications-AI-Projects
+  </a>
+
+  <!-- Deep learning from scratch -->
+  <div class="repo-cluster">
+    <div class="ckey">Deep learning, from scratch · PyTorch</div>
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-tag">Transformer</div>
+        <h4>Transformer architecture</h4>
+        <p>The full Transformer — multi-head attention, positional encodings, and the encoder/decoder stacks — built straight from the paper in raw PyTorch.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/Transformer-architecture/transfomer-architecture-using-Pytorch.py" target="_blank" rel="noopener">Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">CNN · ResNet</div>
+        <h4>ResNet-50 / 101 / 152</h4>
+        <p>Residual networks rebuilt from scratch with bottleneck blocks across all three depths, trained on a Cats vs Dogs classifier.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/ResNet%7B50%2C%20101%2C%20152%7D_from_scratch_on_Cats_%26_Dogs_Dataset_Pytorch.ipynb" target="_blank" rel="noopener">Notebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">CNN · AlexNet</div>
+        <h4>AlexNet</h4>
+        <p>The AlexNet CNN reconstructed from the original paper and trained end-to-end on the Cats vs Dogs dataset.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/AexNet_from_scratch_on_Cats_%26_Dogs_Dataset_Pytorch.ipynb" target="_blank" rel="noopener">Notebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">Recurrent</div>
+        <h4>RNN &amp; LSTM variants</h4>
+        <p>Recurrent cells from scratch — vanilla RNN plus three LSTM variants (standard, coupled input/forget, and peephole) — implemented and compared.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/RNN%26LSTM%20and%20their%20variants/RNN%20%26%20LSTM%20(Vanila%2C%20Coupled%2C%20Peephole)%20From%20scratch.ipynb" target="_blank" rel="noopener">Notebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word representations & language models -->
+  <div class="repo-cluster">
+    <div class="ckey">Word representations &amp; language models</div>
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-tag">Embeddings</div>
+        <h4>Word2Vec</h4>
+        <p>Word2Vec from scratch — skip-gram with negative sampling — learning word embeddings without leaning on a library.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/tree/main/Word2Vec" target="_blank" rel="noopener">Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">Embeddings</div>
+        <h4>GloVe</h4>
+        <p>GloVe embeddings implemented from scratch, factorizing the global word co-occurrence matrix into dense vectors.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/Glove/GloVe-%20from%20Sctarch.ipynb" target="_blank" rel="noopener">Notebook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">BERT · fine-tuning</div>
+        <h4>BERT fine-tuning suite</h4>
+        <p>Fine-tuning BERT across three downstream tasks: multi-class classification, sentiment analysis, and sentence-pair inference.</p>
+        <div class="repo-links">
+          <a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/Fine-Tune%20Bert%20for%20Multi-Class%20Classification.ipynb" target="_blank" rel="noopener">Multi-class <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/Fine-tune%20BERT%20for%20Sentiment%20Analysis.ipynb" target="_blank" rel="noopener">Sentiment <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/MohammadElsharqawy/Paper-Replications-AI-Projects/blob/main/Fine-tuning%20the%20BERT%20model%20for%20sentence-pair.ipynb" target="_blank" rel="noopener">Sentence-pair <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classical AI & algorithms -->
+  <div class="repo-cluster">
+    <div class="ckey">Classical AI &amp; algorithms</div>
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-tag">Search</div>
+        <h4>Search-based agents · 8-Puzzle</h4>
+        <p>Solving the 8-Puzzle with five search strategies — BFS, DFS, Uniform-Cost, Greedy, and A* — to compare optimality and cost.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/AI" target="_blank" rel="noopener">Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">Optimization</div>
+        <h4>TSP via Genetic Algorithm</h4>
+        <p>Approximating the Travelling Salesman Problem with a genetic algorithm — selection, crossover, and mutation over candidate routes.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/Travelling-Salesman-Problem-with-Genetic-Algorithm" target="_blank" rel="noopener">Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Systems & backend -->
+  <div class="repo-cluster">
+    <div class="ckey">Systems &amp; backend</div>
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-tag">Networking · teaching</div>
+        <h4>Networking &amp; IPC demos</h4>
+        <p>Teaching demos built for students: a Python socket-based chat application, and an RPC chatroom in Go using connection pooling.</p>
+        <div class="repo-links">
+          <a href="https://github.com/MohammadElsharqawy/Python-Socket-Chat" target="_blank" rel="noopener">Sockets (Python) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a href="https://github.com/MohammadElsharqawy/Chatroom-RPC-pooling-based" target="_blank" rel="noopener">RPC (Go) <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-tag">Backend</div>
+        <h4>E-commerce backend</h4>
+        <p>A RESTful e-commerce backend built with Node.js, Express, and MongoDB — data models, routing, and API endpoints.</p>
+        <div class="repo-links"><a href="https://github.com/MohammadElsharqawy/E-commerce-web-app-backend" target="_blank" rel="noopener">Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- ============ EXPERIENCE ============ -->
 <div class="wrap">
 <section id="experience">
-  <div class="sec-head"><span class="num">03</span><h2>Experience</h2></div>
+  <div class="sec-head"><span class="num">05</span><h2>Experience</h2></div>
 
   <div class="timeline">
     <div class="tl-item now">
@@ -382,8 +630,17 @@
       <div class="tl-role">Teaching Assistant</div>
       <div class="tl-org">Tanta University · Computer Engineering / AI Departments</div>
       <ul>
-        <li>Instructing Data Structures &amp; Algorithms, Operating Systems, Object-Oriented Programming, and Artificial Intelligence across Fall &rsquo;24/&rsquo;25 and Spring &rsquo;25.</li>
+        <li>Lead instruction across the Computer Engineering &amp; AI undergraduate curriculum — from programming foundations to machine learning:</li>
       </ul>
+      <div class="ta-courses">
+        <span class="ta-course"><b>Machine Learning</b><span class="t">Spring 2026</span></span>
+        <span class="ta-course"><b>Artificial Intelligence</b><span class="t">Spring 2025 &amp; 2026</span></span>
+        <span class="ta-course"><b>Operating Systems</b><span class="t">Fall 2024 &amp; 2025</span></span>
+        <span class="ta-course"><b>Data Structures &amp; Algorithms</b><span class="t">Fall 2024 &amp; 2025</span></span>
+        <span class="ta-course"><b>Object-Oriented Programming</b><span class="t">Spring 2025</span></span>
+        <span class="ta-course"><b>Structural Programming · Python</b><span class="t">Spring 2025</span></span>
+        <span class="ta-course"><b>Structural Programming · C++</b><span class="t">Fall 2024</span></span>
+      </div>
     </div>
 
     <div class="tl-item">
@@ -412,7 +669,7 @@
 <!-- ============ STACK ============ -->
 <div class="wrap">
 <section id="stack">
-  <div class="sec-head"><span class="num">04</span><h2>Technical stack</h2></div>
+  <div class="sec-head"><span class="num">06</span><h2>Technical stack</h2></div>
 
   <div class="skills-grid">
     <div class="skill-row">
@@ -448,7 +705,7 @@
 <section>
   <div class="split">
     <div>
-      <div class="sec-head" style="margin-bottom:24px"><span class="num">05</span><h2>Achievements</h2></div>
+      <div class="sec-head" style="margin-bottom:24px"><span class="num">07</span><h2>Achievements</h2></div>
       <div class="ach-item">
         <span class="mk">4th</span>
         <span class="tx">Ranked 4th of 150+ in the graduating class<small>Tanta University · Excellent with honors</small></span>
@@ -459,16 +716,16 @@
       </div>
       <div class="ach-item">
         <span class="mk">ICPC</span>
-        <span class="tx">Finalist, ACM-ICPC Egyptian Collegiate Programming Contest<small>Two consecutive years · 2021, 2022</small></span>
+        <span class="tx">Finalist, ACM-ICPC Egyptian Collegiate Programming Contest<small>Two consecutive years · 2021, 2022 · <a class="verify" href="https://icpc.global/ICPCID/RFNKFEUEGG2T" target="_blank" rel="noopener"><span class="ok">●</span> ICPC&nbsp;ID verified <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></small></span>
       </div>
       <div class="ach-item">
         <span class="mk">2nd</span>
-        <span class="tx">2nd place, Tanta University Collegiate Programming Contest<small>2021 &amp; 2022 · 8th in 2020</small></span>
+        <span class="tx">2nd place, Tanta University Collegiate Programming Contest<small>2021 &amp; 2022 · 8th in 2020 · <a class="verify" href="https://icpc.global/ICPCID/RFNKFEUEGG2T" target="_blank" rel="noopener"><span class="ok">●</span> ICPC&nbsp;ID verified <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></small></span>
       </div>
     </div>
 
     <div>
-      <div class="sec-head" style="margin-bottom:24px"><span class="num">06</span><h2>Education</h2></div>
+      <div class="sec-head" style="margin-bottom:24px"><span class="num">08</span><h2>Education</h2></div>
       <div class="edu-item">
         <div class="deg">MSc, Computer Engineering</div>
         <div class="sch">Tanta University</div>
@@ -501,15 +758,13 @@
         <span class="ck">Phone</span>
         <span class="cv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>+20 101 842 4238</span>
       </a>
-      <!-- TODO: GitHub URL -->
-      <a class="crow" href="#">
+      <a class="crow" href="https://github.com/MohammadElsharqawy" target="_blank" rel="noopener">
         <span class="ck">GitHub</span>
-        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>github.com/&hellip;</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>github.com/MohammadElsharqawy</span>
       </a>
-      <!-- TODO: LinkedIn URL -->
-      <a class="crow" href="#">
+      <a class="crow" href="https://www.linkedin.com/in/mohammad-elsharqawy-a86991190/" target="_blank" rel="noopener">
         <span class="ck">LinkedIn</span>
-        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>linkedin.com/in/&hellip;</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>mohammad-elsharqawy</span>
       </a>
     </div>
 
@@ -538,5 +793,6 @@
     requestAnimationFrame(step);
   })();
 </script>
+
 </body>
 </html>
