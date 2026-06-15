@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Elsharqawy — Systems Reliability Research</title>
+<meta name="description" content="Mohammad Elsharqawy — Computer Engineering researcher working on system reliability and agentic SRE. PhD applicant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F4F7;
+    --paper-2:#FFFFFF;
+    --ink:#11151C;
+    --ink-soft:#576070;
+    --ink-faint:#8A93A2;
+    --signal:#2536DE;
+    --signal-deep:#1A26A8;
+    --online:#1A9E6B;
+    --line:#DCE0E8;
+    --line-strong:#C5CAD4;
+    --panel:#0C1018;
+    --panel-2:#141A26;
+    --panel-line:#222C3C;
+    --maxw:1140px;
+    --r:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-weight:450;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--signal);color:#fff;}
+
+  /* ---------- type ---------- */
+  .display{font-family:"Archivo",sans-serif;font-stretch:115%;line-height:1.0;letter-spacing:-.02em;font-weight:800;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--signal);font-weight:500;
+  }
+  .key{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-faint);font-weight:500;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  section{padding:84px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:42px;flex-wrap:wrap;}
+  .sec-head .num{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--signal);font-weight:500;}
+  .sec-head h2{font-family:"Archivo",sans-serif;font-stretch:112%;font-weight:700;font-size:clamp(1.6rem,3.4vw,2.4rem);margin:0;letter-spacing:-.02em;}
+
+  /* ---------- nav ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(243,244,247,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.92rem;letter-spacing:.02em;display:flex;align-items:center;gap:9px;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--online);box-shadow:0 0 0 4px rgba(26,158,107,.15);}
+  .nav-links{display:flex;gap:26px;align-items:center;}
+  .nav-links a{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-soft);transition:color .15s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--signal);border:1px solid var(--line-strong);padding:7px 13px;border-radius:8px;transition:.15s;}
+  .nav-cta:hover{border-color:var(--signal);background:#fff;}
+  @media(max-width:820px){.nav-links{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 72px;border-top:none;}
+  .hero-status{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--ink-soft);border:1px solid var(--line);background:var(--paper-2);padding:7px 14px;border-radius:100px;margin-bottom:30px;}
+  .hero-status .pulse{width:8px;height:8px;border-radius:50%;background:var(--online);}
+  .hero h1{font-family:"Archivo",sans-serif;font-stretch:118%;font-weight:800;letter-spacing:-.035em;line-height:.94;font-size:clamp(2.9rem,8.5vw,5.6rem);margin:0 0 26px;}
+  .hero h1 .ln2{color:var(--signal);}
+  .hero-thesis{font-size:clamp(1.05rem,2.1vw,1.32rem);max-width:640px;color:var(--ink);line-height:1.55;margin:0 0 34px;font-weight:450;}
+  .hero-thesis b{font-weight:600;}
+
+  .heartbeat{width:100%;max-width:640px;height:46px;margin:6px 0 34px;display:block;}
+  .heartbeat path.base{stroke:var(--line-strong);stroke-width:1;fill:none;}
+  .heartbeat path.live{stroke:var(--signal);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:"IBM Plex Mono",monospace;font-size:.84rem;font-weight:500;padding:12px 18px;border-radius:10px;transition:.16s;border:1px solid transparent;}
+  .btn-primary{background:var(--signal);color:#fff;}
+  .btn-primary:hover{background:var(--signal-deep);transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink);background:var(--paper-2);}
+  .btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px);}
+  .btn svg{width:15px;height:15px;}
+
+  /* telemetry strip */
+  .telemetry{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
+  .telemetry .cell{background:var(--paper-2);padding:20px 20px;}
+  .telemetry .cell .k{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px;}
+  .telemetry .cell .v{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:600;font-size:1.02rem;line-height:1.2;letter-spacing:-.01em;}
+  .telemetry .cell .v small{display:block;font-family:"IBM Plex Sans";font-weight:450;font-size:.82rem;color:var(--ink-soft);margin-top:3px;letter-spacing:0;}
+  @media(max-width:820px){.telemetry{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:430px){.telemetry{grid-template-columns:1fr;}}
+
+  /* ---------- research focus ---------- */
+  .focus-lead{font-size:clamp(1.1rem,2vw,1.34rem);max-width:760px;line-height:1.6;margin:0 0 50px;color:var(--ink);}
+  .focus-lead b{font-weight:600;color:var(--signal);}
+  .focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .focus-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;position:relative;overflow:hidden;}
+  .focus-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--signal);}
+  .focus-card .fkey{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin-bottom:14px;display:block;}
+  .focus-card h3{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.18rem;margin:0 0 10px;letter-spacing:-.01em;}
+  .focus-card p{margin:0;font-size:.95rem;color:var(--ink-soft);line-height:1.58;}
+  @media(max-width:880px){.focus-grid{grid-template-columns:1fr;}}
+
+  .uiuc-callout{margin-top:30px;display:flex;gap:20px;align-items:flex-start;background:var(--panel);color:#E8ECF3;border-radius:var(--r);padding:28px 30px;}
+  .uiuc-callout .badge{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:#8FA0FF;border:1px solid var(--panel-line);padding:5px 10px;border-radius:7px;white-space:nowrap;margin-top:3px;}
+  .uiuc-callout p{margin:0;line-height:1.62;font-size:1rem;}
+  .uiuc-callout p b{color:#fff;font-weight:600;}
+  .uiuc-callout a{color:#9BAAFF;border-bottom:1px solid rgba(155,170,255,.35);}
+  @media(max-width:620px){.uiuc-callout{flex-direction:column;gap:14px;}}
+
+  /* ---------- projects ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .proj{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px 26px 24px;display:flex;flex-direction:column;transition:.18s;}
+  .proj:hover{border-color:var(--line-strong);transform:translateY(-2px);box-shadow:0 14px 34px -22px rgba(17,21,28,.4);}
+  .proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px;}
+  .proj-status{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.08em;color:var(--online);display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+  .proj-status .d{width:7px;height:7px;border-radius:50%;background:var(--online);}
+  .proj h3{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.16rem;margin:0 0 10px;letter-spacing:-.01em;line-height:1.15;}
+  .proj p{margin:0 0 18px;font-size:.92rem;color:var(--ink-soft);line-height:1.56;flex:1;}
+  .stack{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+  .stack span{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);padding:4px 9px;border-radius:6px;}
+  .proj-link{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--signal);font-weight:500;display:inline-flex;align-items:center;gap:7px;align-self:flex-start;}
+  .proj-link svg{width:13px;height:13px;transition:transform .15s;}
+  .proj:hover .proj-link svg{transform:translate(2px,-2px);}
+  @media(max-width:780px){.proj-grid{grid-template-columns:1fr;}}
+
+  /* ---------- experience timeline ---------- */
+  .timeline{position:relative;margin-left:6px;}
+  .tl-item{position:relative;padding:0 0 38px 34px;border-left:1px solid var(--line-strong);}
+  .tl-item:last-child{border-left-color:transparent;padding-bottom:0;}
+  .tl-item::before{content:"";position:absolute;left:-6px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--paper);border:2px solid var(--signal);}
+  .tl-item.now::before{background:var(--signal);box-shadow:0 0 0 5px rgba(37,54,222,.13);}
+  .tl-when{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:5px;}
+  .tl-role{font-family:"Archivo",sans-serif;font-stretch:106%;font-weight:700;font-size:1.12rem;letter-spacing:-.01em;margin:0 0 3px;}
+  .tl-org{font-size:.92rem;color:var(--signal);font-weight:500;margin-bottom:10px;}
+  .tl-item ul{margin:0;padding-left:18px;color:var(--ink-soft);font-size:.93rem;line-height:1.6;}
+  .tl-item ul li{margin-bottom:5px;}
+
+  /* ---------- skills ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
+  .skill-row{background:var(--paper-2);padding:22px 24px;}
+  .skill-row .k{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin-bottom:13px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chips span{font-size:.84rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:6px 11px;border-radius:7px;font-weight:450;}
+  .chips span.core{border-color:var(--line-strong);font-weight:500;}
+  @media(max-width:780px){.skills-grid{grid-template-columns:1fr;}}
+
+  /* ---------- achievements + edu split ---------- */
+  .split{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;}
+  @media(max-width:880px){.split{grid-template-columns:1fr;gap:40px;}}
+  .ach-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
+  .ach-item:last-child{border-bottom:none;}
+  .ach-item .mk{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--signal);font-weight:600;flex-shrink:0;width:46px;}
+  .ach-item .tx{font-size:.96rem;color:var(--ink);line-height:1.5;}
+  .ach-item .tx small{display:block;color:var(--ink-soft);font-size:.85rem;margin-top:2px;}
+  .edu-item{padding:18px 0;border-bottom:1px solid var(--line);}
+  .edu-item:last-child{border-bottom:none;}
+  .edu-item .deg{font-family:"Archivo",sans-serif;font-stretch:106%;font-weight:700;font-size:1.06rem;letter-spacing:-.01em;margin-bottom:3px;}
+  .edu-item .sch{font-size:.92rem;color:var(--signal);margin-bottom:4px;}
+  .edu-item .meta{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-soft);}
+
+  /* ---------- contact / footer ---------- */
+  .contact{background:var(--panel);color:#E8ECF3;border-top:none;}
+  .contact .wrap{padding-top:84px;padding-bottom:84px;}
+  .contact .eyebrow{color:#8FA0FF;}
+  .contact h2{font-family:"Archivo",sans-serif;font-stretch:115%;font-weight:800;letter-spacing:-.025em;font-size:clamp(2rem,5vw,3.2rem);margin:14px 0 22px;line-height:1;}
+  .contact .lead{color:#AEB7C6;max-width:560px;font-size:1.08rem;line-height:1.6;margin:0 0 40px;}
+  .contact-rows{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--panel-line);border:1px solid var(--panel-line);border-radius:var(--r);overflow:hidden;max-width:760px;}
+  .crow{background:var(--panel);padding:20px 22px;display:flex;flex-direction:column;gap:5px;transition:background .15s;}
+  a.crow:hover{background:var(--panel-2);}
+  .crow .ck{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#6E7A8E;}
+  .crow .cv{font-family:"IBM Plex Mono",monospace;font-size:.92rem;color:#fff;word-break:break-all;display:flex;align-items:center;gap:9px;}
+  .crow .cv svg{width:15px;height:15px;flex-shrink:0;color:#8FA0FF;}
+  @media(max-width:560px){.contact-rows{grid-template-columns:1fr;}}
+  .foot{border-top:1px solid var(--panel-line);margin-top:54px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:#6E7A8E;}
+
+  /* reduced motion */
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>mohammad_elsharqawy</a>
+    <nav class="nav-links">
+      <a href="#research">research</a>
+      <a href="#work">work</a>
+      <a href="#experience">experience</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <!-- TODO: replace with your CV file link -->
+    <a href="#" class="nav-cta">↓ CV</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ============ HERO ============ -->
+<div class="wrap">
+<section class="hero">
+  <div class="hero-status"><span class="pulse"></span>Seeking PhD position · Systems &amp; Reliability · 2026 cycle</div>
+  <h1 class="display">Mohammad<br>Elsharqawy</h1>
+  <p class="hero-thesis">I build and study systems that <b>stay up</b>. My work sits where DevOps practice meets systems research — the <b>reliability</b> of cloud-scale infrastructure, and the emerging question of how autonomous agents can <b>operate and repair</b> it.</p>
+
+  <svg class="heartbeat" viewBox="0 0 640 46" preserveAspectRatio="none" aria-hidden="true">
+    <path class="base" d="M0 23 H640"/>
+    <path class="live" id="pulseLine" d="M0 23 H180 l10 -16 l12 30 l10 -22 l9 10 H300 l8 -14 l11 22 l9 -8 H640"/>
+  </svg>
+
+  <div class="hero-actions">
+    <a href="#research" class="btn btn-primary">Read research focus
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a href="mailto:mohammadelsharqawyegy@gmail.com" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a>
+    <!-- TODO: replace # with your GitHub URL -->
+    <a href="#" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>GitHub</a>
+    <!-- TODO: replace # with your LinkedIn URL -->
+    <a href="#" class="btn btn-ghost">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>LinkedIn</a>
+  </div>
+
+  <div class="telemetry">
+    <div class="cell">
+      <div class="k">Current</div>
+      <div class="v">Research Intern<small>UIUC · w/ Prof. Tianyin Xu</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">Focus</div>
+      <div class="v">System Reliability<small>+ Agentic SRE</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">MSc · Computer Eng.</div>
+      <div class="v">GPA 3.7<small>Tanta University · &rsquo;27</small></div>
+    </div>
+    <div class="cell">
+      <div class="k">BSc Class Rank</div>
+      <div class="v">4<span style="font-size:.7em">th</span> / 150+<small>Excellent with honors</small></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ RESEARCH FOCUS ============ -->
+<div class="wrap">
+<section id="research">
+  <div class="sec-head"><span class="num">01</span><h2>Research focus</h2></div>
+
+  <p class="focus-lead">Modern cloud systems fail in ways that are hard to predict and harder to recover from — misconfigurations, cross-system interactions, and cascading faults. I want to make these systems <b>observably reliable</b>, and to study whether <b>autonomous agents</b> can take on the operational work of keeping them healthy.</p>
+
+  <div class="focus-grid">
+    <div class="focus-card">
+      <span class="fkey">/01 · reliability</span>
+      <h3>System reliability</h3>
+      <p>Understanding and reducing failures at cloud and datacenter scale — configuration errors, fault recovery, and the interactions between services that cause real-world outages.</p>
+    </div>
+    <div class="focus-card">
+      <span class="fkey">/02 · agents</span>
+      <h3>Agentic SRE</h3>
+      <p>Can LLM-driven agents diagnose, remediate, and safely operate production infrastructure? Bridging MLOps and site reliability to make automation trustworthy under failure.</p>
+    </div>
+    <div class="focus-card">
+      <span class="fkey">/03 · practice</span>
+      <h3>From practice to research</h3>
+      <p>Hands-on infrastructure — Kubernetes, GitOps, Terraform, CI/CD — grounds my research in the failure modes operators actually face, not abstractions.</p>
+    </div>
+  </div>
+
+  <div class="uiuc-callout">
+    <span class="badge">Now · UIUC</span>
+    <p>As a <b>Research Intern at the University of Illinois Urbana-Champaign</b>, I work with <b>Prof. Tianyin Xu</b> on <b>system reliability and agentic SRE</b> — building toward infrastructure that can detect, reason about, and repair its own failures. Prof. Xu&rsquo;s group studies the reliability of cloud-scale systems at <a href="https://tianyin.github.io/" target="_blank" rel="noopener">illinois.edu</a>.</p>
+  </div>
+</section>
+</div>
+
+<!-- ============ SELECTED WORK ============ -->
+<div class="wrap">
+<section id="work">
+  <div class="sec-head"><span class="num">02</span><h2>Selected work</h2><span class="key" style="margin-left:auto">Systems · infra · ML</span></div>
+
+  <div class="proj-grid">
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>Kubernetes GitOps Deployment</h3>
+        <span class="proj-status"><span class="d"></span>declarative</span>
+      </div>
+      <p>Containerized a Go application and deployed it to Kubernetes with Argo CD, making Git the single source of truth. Manifests reconcile cluster state automatically — trackable, reproducible, self-healing deployments.</p>
+      <div class="stack"><span>Go</span><span>Docker</span><span>Kubernetes</span><span>Argo CD</span><span>Minikube</span></div>
+      <!-- TODO: project link --><a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>CI/CD Pipeline — Vprofile</h3>
+        <span class="proj-status"><span class="d"></span>continuous</span>
+      </div>
+      <p>End-to-end Jenkins pipeline: build and test with Maven, static analysis and quality gates via SonarQube, artifacts in Nexus, versioned images to Docker Hub, and automated delivery to AWS ECS with Slack notifications.</p>
+      <div class="stack"><span>Jenkins</span><span>Maven</span><span>SonarQube</span><span>Nexus</span><span>AWS ECS</span></div>
+      <a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>Microservices on Kubernetes — Weather App</h3>
+        <span class="proj-status"><span class="d"></span>resilient</span>
+      </div>
+      <p>Multi-service app (UI, auth, weather API, MySQL) on Kubernetes. StatefulSet with persistent volumes for durable data, ConfigMaps/Secrets for config, liveness &amp; readiness probes for zero-downtime, NGINX Ingress with TLS.</p>
+      <div class="stack"><span>Kubernetes</span><span>StatefulSet</span><span>Ingress</span><span>MySQL</span><span>TLS</span></div>
+      <a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>Automated CI/CD &amp; Infra Pipeline</h3>
+        <span class="proj-status"><span class="d"></span>provisioned</span>
+      </div>
+      <p>Provisioned secure AWS infrastructure with Terraform, then drove it from Jenkins — Ansible reaching private EC2 via a bastion host, EC2 build agents, and a Node.js deployment fronted by an Application Load Balancer.</p>
+      <div class="stack"><span>Terraform</span><span>Jenkins</span><span>Ansible</span><span>AWS</span><span>Node.js</span></div>
+      <a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>AWS Multi-Tier Web App</h3>
+        <span class="proj-status"><span class="d"></span>highly-available</span>
+      </div>
+      <p>Secure, highly available multi-tier architecture: ALB with end-to-end HTTPS (ACM/TLS), Auto Scaling Tomcat tier, Route 53 private zones for internal service discovery, and tier-isolated security groups over MySQL, Memcached, RabbitMQ.</p>
+      <div class="stack"><span>EC2</span><span>ALB</span><span>Auto Scaling</span><span>Route 53</span><span>ACM</span></div>
+      <a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <h3>End-to-End Medical Chatbot</h3>
+        <span class="proj-status"><span class="d"></span>deployed</span>
+      </div>
+      <p>A Flask RAG application for real-time medical Q&amp;A: LangChain pipeline with Sentence-BERT embeddings, Pinecone serverless vector DB, and GPT-4o. Containerized with Docker, hosted on AWS EC2/ECR, shipped via GitHub Actions.</p>
+      <div class="stack"><span>LangChain</span><span>Pinecone</span><span>GPT-4o</span><span>Flask</span><span>AWS</span></div>
+      <a href="#" class="proj-link">View project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- ============ EXPERIENCE ============ -->
+<div class="wrap">
+<section id="experience">
+  <div class="sec-head"><span class="num">03</span><h2>Experience</h2></div>
+
+  <div class="timeline">
+    <div class="tl-item now">
+      <div class="tl-when">2025 — Now</div>
+      <div class="tl-role">Research Intern</div>
+      <div class="tl-org">University of Illinois Urbana-Champaign · w/ Prof. Tianyin Xu</div>
+      <ul>
+        <li>Researching system reliability and agentic SRE — how autonomous agents can detect, reason about, and remediate failures in cloud-scale infrastructure.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-when">Sep 2024 — Now</div>
+      <div class="tl-role">Teaching Assistant</div>
+      <div class="tl-org">Tanta University · Computer Engineering / AI Departments</div>
+      <ul>
+        <li>Instructing Data Structures &amp; Algorithms, Operating Systems, Object-Oriented Programming, and Artificial Intelligence across Fall &rsquo;24/&rsquo;25 and Spring &rsquo;25.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-when">Jan 2024 — Sep 2024</div>
+      <div class="tl-role">AI, Data Scientist &amp; Cloud Engineer Trainee</div>
+      <div class="tl-org">Digital Egypt Builders Initiative (DEBI) · Cairo</div>
+      <ul>
+        <li>Intensive training across AI, data science, and cloud engineering as part of Egypt&rsquo;s national digital-talent initiative.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-when">Jul 2022 — Sep 2022</div>
+      <div class="tl-role">Software Engineering Intern</div>
+      <div class="tl-org">Ithra Services Ltd</div>
+      <ul>
+        <li>Engineered RESTful APIs with MongoDB CRUD models, documented via JSON Schema and Postman.</li>
+        <li>Implemented JWT auth, integrated payment hooks, and containerized services with Docker.</li>
+        <li>Automated AWS EC2 deployments with GitHub Actions CI/CD and Ansible.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ STACK ============ -->
+<div class="wrap">
+<section id="stack">
+  <div class="sec-head"><span class="num">04</span><h2>Technical stack</h2></div>
+
+  <div class="skills-grid">
+    <div class="skill-row">
+      <div class="k">DevOps · Infrastructure</div>
+      <div class="chips">
+        <span class="core">AWS</span><span class="core">Terraform</span><span class="core">Docker</span><span class="core">Kubernetes</span><span>Jenkins</span><span>GitHub Actions</span><span>Ansible</span><span>Argo CD</span><span>Linux</span><span>Bash</span><span>Git</span><span>Serverless</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="k">Languages</div>
+      <div class="chips">
+        <span class="core">Python</span><span class="core">C / C++</span><span>Go</span><span>Java</span><span>JavaScript</span><span>VHDL</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="k">Machine Learning · AI</div>
+      <div class="chips">
+        <span>PyTorch</span><span>TensorFlow</span><span>Scikit-Learn</span><span class="core">RAG</span><span>LoRA</span><span>Fine-tuning</span><span>Transformers</span><span>LLMs</span><span>Quantization</span><span>MLflow</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="k">Backend · Data</div>
+      <div class="chips">
+        <span>Node.js</span><span>Flask</span><span>MySQL</span><span>MongoDB</span><span>RESTful APIs</span><span>RPC</span><span>MLOps practices</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ ACHIEVEMENTS + EDUCATION ============ -->
+<div class="wrap">
+<section>
+  <div class="split">
+    <div>
+      <div class="sec-head" style="margin-bottom:24px"><span class="num">05</span><h2>Achievements</h2></div>
+      <div class="ach-item">
+        <span class="mk">4th</span>
+        <span class="tx">Ranked 4th of 150+ in the graduating class<small>Tanta University · Excellent with honors</small></span>
+      </div>
+      <div class="ach-item">
+        <span class="mk">×5</span>
+        <span class="tx">Top Students Financial Award<small>Tanta University · 2019, 2020, 2021, 2022, 2023</small></span>
+      </div>
+      <div class="ach-item">
+        <span class="mk">ICPC</span>
+        <span class="tx">Finalist, ACM-ICPC Egyptian Collegiate Programming Contest<small>Two consecutive years · 2021, 2022</small></span>
+      </div>
+      <div class="ach-item">
+        <span class="mk">2nd</span>
+        <span class="tx">2nd place, Tanta University Collegiate Programming Contest<small>2021 &amp; 2022 · 8th in 2020</small></span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-head" style="margin-bottom:24px"><span class="num">06</span><h2>Education</h2></div>
+      <div class="edu-item">
+        <div class="deg">MSc, Computer Engineering</div>
+        <div class="sch">Tanta University</div>
+        <div class="meta">Jan 2024 — May 2027 (expected) · GPA 3.7</div>
+      </div>
+      <div class="edu-item">
+        <div class="deg">BSc, Computer Engineering &amp; Automatic Control</div>
+        <div class="sch">Tanta University</div>
+        <div class="meta">Oct 2018 — Jun 2023 · Excellent with honors · 4th / 150+</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</main>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="eyebrow">// open to collaboration</div>
+    <h2 class="display">Let&rsquo;s talk reliability.</h2>
+    <p class="lead">I&rsquo;m applying to PhD programs in computer systems and reliability. If your group works on dependable infrastructure, agentic operations, or cloud-scale systems, I&rsquo;d love to connect.</p>
+
+    <div class="contact-rows">
+      <a class="crow" href="mailto:mohammadelsharqawyegy@gmail.com">
+        <span class="ck">Email</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>mohammadelsharqawyegy@gmail.com</span>
+      </a>
+      <a class="crow" href="tel:+201018424238">
+        <span class="ck">Phone</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>+20 101 842 4238</span>
+      </a>
+      <!-- TODO: GitHub URL -->
+      <a class="crow" href="#">
+        <span class="ck">GitHub</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.55-1.14-4.55-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>github.com/&hellip;</span>
+      </a>
+      <!-- TODO: LinkedIn URL -->
+      <a class="crow" href="#">
+        <span class="ck">LinkedIn</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>linkedin.com/in/&hellip;</span>
+      </a>
+    </div>
+
+    <div class="foot">
+      <span>AlNerges Compound · New Administrative Capital, Egypt</span>
+      <span>© 2026 Mohammad Elsharqawy</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Animated liveness pulse — a moving dash along the heartbeat line.
+  (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var line = document.getElementById('pulseLine');
+    if(!line) return;
+    var len = line.getTotalLength();
+    line.style.strokeDasharray = (len*0.18) + ' ' + (len*0.82);
+    var start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var t = ((ts - start) / 3200) % 1;
+      line.style.strokeDashoffset = (len * (1 - t)).toFixed(1);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+</script>
+</body>
+</html>
