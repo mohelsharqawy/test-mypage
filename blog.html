@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Mohammad Elsharqawy</title>
+<meta name="description" content="Writing on systems reliability, agentic SRE, and research by Mohammad Elsharqawy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F4F7; --paper-2:#FFFFFF; --ink:#11151C; --ink-soft:#576070; --ink-faint:#8A93A2;
+    --signal:#2536DE; --signal-deep:#1A26A8; --online:#1A9E6B;
+    --line:#DCE0E8; --line-strong:#C5CAD4;
+    --panel:#0C1018; --panel-2:#141A26; --panel-line:#222C3C;
+    --maxw:820px; --r:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-weight:450;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--signal);color:#fff;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(243,244,247,.82);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:980px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:9px;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--online);box-shadow:0 0 0 4px rgba(26,158,107,.15);}
+  .nav-back{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-soft);transition:color .15s;}
+  .nav-back:hover{color:var(--ink);}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* header */
+  .blog-head{padding:72px 0 8px;}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);font-weight:500;}
+  .blog-head h1{font-family:"Archivo",sans-serif;font-stretch:116%;font-weight:800;letter-spacing:-.03em;font-size:clamp(2.4rem,6vw,3.6rem);margin:14px 0 16px;line-height:1;}
+  .blog-head p{font-size:1.1rem;color:var(--ink-soft);max-width:560px;margin:0;line-height:1.55;}
+
+  /* post list */
+  .posts{padding:44px 0 90px;border-top:1px solid var(--line);margin-top:40px;}
+  .post-row{display:block;padding:24px 0;border-bottom:1px solid var(--line);transition:.15s;}
+  .post-row:first-child{border-top:none;}
+  .post-row:hover{padding-left:10px;}
+  .post-row .meta{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.04em;color:var(--ink-faint);margin-bottom:7px;display:flex;align-items:center;gap:10px;}
+  .post-row h2{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.35rem;letter-spacing:-.015em;margin:0;line-height:1.2;display:flex;align-items:center;gap:10px;}
+  .post-row h2 .arrow{color:var(--signal);opacity:0;transform:translateX(-4px);transition:.15s;}
+  .post-row:hover h2 .arrow{opacity:1;transform:translateX(0);}
+
+  /* states */
+  .state{padding:60px 0 100px;border-top:1px solid var(--line);margin-top:40px;}
+  .state .box{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:34px 32px;}
+  .state h3{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 10px;letter-spacing:-.01em;}
+  .state p{margin:0 0 8px;color:var(--ink-soft);line-height:1.6;}
+  .state code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 6px;}
+  .skeleton{height:18px;background:linear-gradient(90deg,var(--line) 0%,#E9ECF2 50%,var(--line) 100%);background-size:200% 100%;border-radius:5px;animation:sh 1.3s ease-in-out infinite;}
+  .skel-row{padding:24px 0;border-bottom:1px solid var(--line);}
+  .skel-row .a{width:120px;margin-bottom:12px;}
+  .skel-row .b{width:60%;height:24px;}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  /* article / prose */
+  .article{padding:24px 0 100px;}
+  .article-back{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--signal);display:inline-flex;align-items:center;gap:7px;margin:36px 0 22px;}
+  .article-back:hover{text-decoration:underline;}
+  .article-date{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-faint);margin-bottom:18px;}
+  .prose{font-size:1.05rem;line-height:1.75;color:var(--ink);}
+  .prose>*:first-child{margin-top:0;}
+  .prose h1{font-family:"Archivo",sans-serif;font-stretch:112%;font-weight:800;font-size:clamp(1.9rem,4.5vw,2.7rem);letter-spacing:-.025em;line-height:1.08;margin:0 0 18px;}
+  .prose h2{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.5rem;letter-spacing:-.015em;margin:2.2em 0 .6em;}
+  .prose h3{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.2rem;margin:1.8em 0 .5em;}
+  .prose p{margin:0 0 1.15em;}
+  .prose a{color:var(--signal);border-bottom:1px solid rgba(37,54,222,.3);}
+  .prose a:hover{border-bottom-color:var(--signal);}
+  .prose strong{font-weight:600;}
+  .prose ul,.prose ol{margin:0 0 1.15em;padding-left:1.4em;}
+  .prose li{margin-bottom:.4em;}
+  .prose blockquote{margin:1.4em 0;padding:.2em 0 .2em 1.1em;border-left:3px solid var(--signal);color:var(--ink-soft);}
+  .prose code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;}
+  .prose pre{background:var(--panel);color:#E8ECF3;border-radius:12px;padding:20px 22px;overflow-x:auto;margin:1.5em 0;font-size:.9rem;line-height:1.6;}
+  .prose pre code{background:none;border:none;padding:0;color:inherit;font-size:inherit;}
+  .prose img{max-width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:1.4em 0;display:block;}
+  .prose hr{border:none;border-top:1px solid var(--line);margin:2.4em 0;}
+  .prose table{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:.95rem;}
+  .prose th,.prose td{border:1px solid var(--line);padding:9px 13px;text-align:left;}
+  .prose th{background:var(--paper-2);font-weight:600;}
+
+  footer{border-top:1px solid var(--line);}
+  footer .wrap{padding:26px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--ink-faint);}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="dot"></span>Mohammad Elsharqawy</a>
+    <a href="index.html" class="nav-back">← back to site</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <header class="blog-head">
+      <div class="eyebrow">// writing</div>
+      <h1 id="pageTitle">Blog</h1>
+      <p id="pageIntro">Notes on systems reliability, agentic SRE, and what I learn while building and breaking infrastructure.</p>
+    </header>
+  </div>
+
+  <div class="wrap">
+    <div id="content"><!-- list, article, or state rendered here --></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mohammad Elsharqawy</span>
+    <span>© 2026 · built on GitHub Pages</span>
+  </div>
+</footer>
+
+<!-- ============================================================
+     BLOG — how it works
+     ------------------------------------------------------------
+     Drop markdown files into a  blog/  folder in this repo and they
+     show up here automatically. No build step, no config to edit.
+
+     • Filename becomes the title:   building-reliable-systems.md
+       → "Building Reliable Systems"
+     • Optional date prefix:         2026-06-16-building-systems.md
+       → shows the date, sorts newest first
+     • Optional front matter at the top of a file:
+         ---
+         title: A Nicer Title
+         date: 2026-06-16
+         ---
+       (overrides the filename-derived title/date)
+
+     Auto-detects your repo when hosted on *.github.io. If you use a
+     CUSTOM DOMAIN, set OWNER and REPO below by hand.
+     ============================================================ -->
+<script>
+(function(){
+  // ---- config (leave blank to auto-detect on github.io) ----
+  var OWNER = "";   // e.g. "MohammadElsharqawy"
+  var REPO  = "";   // e.g. "MohammadElsharqawy.github.io"
+  var DIR   = "blog";
+  var BRANCH = "";  // blank = default branch
+  // ----------------------------------------------------------
+
+  var content = document.getElementById('content');
+
+  function detect(){
+    var owner = OWNER, repo = REPO, host = location.hostname;
+    if((!owner || !repo) && /\.github\.io$/i.test(host)){
+      owner = owner || host.split('.')[0];
+      var seg = location.pathname.split('/').filter(Boolean)[0];
+      repo = repo || (seg && !/\.html?$/i.test(seg) ? seg : host);
+    }
+    return {owner:owner, repo:repo};
+  }
+  var cfg = detect();
+
+  function apiBase(){ return 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo; }
+  function refQ(){ return BRANCH ? ('?ref=' + encodeURIComponent(BRANCH)) : ''; }
+
+  function fmtDate(d){
+    if(!d) return '';
+    var dt = new Date(d + (d.length === 10 ? 'T00:00:00' : ''));
+    if(isNaN(dt)) return d;
+    return dt.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+  }
+
+  function titleCase(s){
+    return s.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim()
+            .replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+  }
+
+  function metaFromName(name){
+    var base = name.replace(/\.md$/i,'');
+    var date = null, rest = base;
+    var m = base.match(/^(\d{4}-\d{2}-\d{2})[-_ ]+(.*)$/);
+    if(m){ date = m[1]; rest = m[2]; }
+    return { file:name, title:titleCase(rest), date:date };
+  }
+
+  function parseFrontMatter(md){
+    var meta = {};
+    var fm = md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+    var body = md;
+    if(fm){
+      body = md.slice(fm[0].length);
+      fm[1].split('\n').forEach(function(line){
+        var i = line.indexOf(':');
+        if(i > -1){
+          var k = line.slice(0,i).trim().toLowerCase();
+          var v = line.slice(i+1).trim().replace(/^["']|["']$/g,'');
+          if(v) meta[k] = v;
+        }
+      });
+    }
+    return { meta:meta, body:body };
+  }
+
+  function escapeHtml(s){ return s.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  // ---- library loading (only when rendering a post) ----
+  function loadScript(src){
+    return new Promise(function(res, rej){
+      var s = document.createElement('script'); s.src = src;
+      s.onload = function(){ res(); }; s.onerror = function(){ rej(); };
+      document.head.appendChild(s);
+    });
+  }
+  function ensureLibs(){
+    var jobs = [];
+    if(!window.marked) jobs.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js'));
+    if(!window.DOMPurify) jobs.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js'));
+    return Promise.all(jobs);
+  }
+
+  // ---- states ----
+  function showState(title, lines){
+    content.innerHTML = '<div class="state"><div class="box"><h3>' + title + '</h3>' +
+      lines.map(function(l){ return '<p>' + l + '</p>'; }).join('') + '</div></div>';
+  }
+  function showSkeleton(){
+    var rows = '';
+    for(var i=0;i<3;i++) rows += '<div class="skel-row"><div class="skeleton a"></div><div class="skeleton b"></div></div>';
+    content.innerHTML = '<div class="posts" style="border-top:none;margin-top:0;padding-top:8px">' + rows + '</div>';
+  }
+
+  function notConfigured(){
+    showState('Set your repo to load posts', [
+      'This page auto-detects your repository when it&rsquo;s served from a <code>*.github.io</code> address. It looks like that didn&rsquo;t resolve (you may be opening the file directly or using a custom domain).',
+      'Open <code>blog.html</code> and set <code>OWNER</code> and <code>REPO</code> near the bottom, then reload.'
+    ]);
+  }
+
+  // ---- list view ----
+  function renderList(){
+    if(!cfg.owner || !cfg.repo){ notConfigured(); return; }
+    var cacheKey = 'blog-list:' + cfg.owner + '/' + cfg.repo;
+    var cached = sessionStorage.getItem(cacheKey);
+    if(cached){ try{ paintList(JSON.parse(cached)); return; }catch(e){} }
+
+    showSkeleton();
+    fetch(apiBase() + '/contents/' + DIR + refQ(), { headers:{ 'Accept':'application/vnd.github+json' } })
+      .then(function(r){
+        if(r.status === 404) return [];
+        if(r.status === 403) throw {rate:true};
+        if(!r.ok) throw {status:r.status};
+        return r.json();
+      })
+      .then(function(items){
+        var posts = (Array.isArray(items) ? items : [])
+          .filter(function(f){ return f.type === 'file' && /\.md$/i.test(f.name) && f.name.toLowerCase() !== 'readme.md'; })
+          .map(function(f){ return metaFromName(f.name); })
+          .sort(function(a,b){
+            var ka = a.date || a.title.toLowerCase();
+            var kb = b.date || b.title.toLowerCase();
+            return ka < kb ? 1 : ka > kb ? -1 : 0;
+          });
+        try{ sessionStorage.setItem(cacheKey, JSON.stringify(posts)); }catch(e){}
+        paintList(posts);
+      })
+      .catch(function(err){
+        if(err && err.rate) showState('GitHub rate limit reached', ['The unauthenticated GitHub API allows ~60 requests per hour. Give it a few minutes and reload.']);
+        else showState('Couldn&rsquo;t load posts', ['Couldn&rsquo;t reach the GitHub API for <code>' + cfg.owner + '/' + cfg.repo + '</code>. Check the repo is public and reload.']);
+      });
+  }
+
+  function paintList(posts){
+    if(!posts.length){
+      showState('No posts yet', [
+        'Add a markdown file to the <code>blog/</code> folder of your repo and it&rsquo;ll appear here automatically.',
+        'Try a file like <code>blog/2026-06-16-hello-world.md</code> — the date sorts it, the rest becomes the title.'
+      ]);
+      return;
+    }
+    var html = '<div class="posts">';
+    posts.forEach(function(p){
+      var meta = p.date ? fmtDate(p.date) : 'Post';
+      html += '<a class="post-row" href="?p=' + encodeURIComponent(p.file) + '">' +
+                '<div class="meta">' + escapeHtml(meta) + '</div>' +
+                '<h2>' + escapeHtml(p.title) + '<span class="arrow">→</span></h2>' +
+              '</a>';
+    });
+    html += '</div>';
+    content.innerHTML = html;
+  }
+
+  // ---- article view ----
+  function renderPost(file){
+    if(!cfg.owner || !cfg.repo){ notConfigured(); return; }
+    content.innerHTML = '<div class="article"><a class="article-back" href="blog.html">← all posts</a>' +
+      '<div class="posts" style="border-top:none;margin-top:0;padding:0"><div class="skel-row" style="border:none"><div class="skeleton a"></div><div class="skeleton b" style="margin-top:12px"></div></div></div></div>';
+
+    var url = apiBase() + '/contents/' + DIR + '/' + encodeURIComponent(file) + refQ();
+    fetch(url, { headers:{ 'Accept':'application/vnd.github.raw' } })
+      .then(function(r){
+        if(r.status === 404) throw {missing:true};
+        if(r.status === 403) throw {rate:true};
+        if(!r.ok) throw {status:r.status};
+        return r.text();
+      })
+      .then(function(md){
+        return ensureLibs().then(function(){ paintPost(file, md); });
+      })
+      .catch(function(err){
+        if(err && err.missing) showState('Post not found', ['Couldn&rsquo;t find <code>' + escapeHtml(file) + '</code> in the <code>blog/</code> folder. <a href="blog.html">Back to all posts</a>.']);
+        else if(err && err.rate) showState('GitHub rate limit reached', ['Give it a few minutes and reload. <a href="blog.html">Back to all posts</a>.']);
+        else showState('Couldn&rsquo;t load this post', ['Something went wrong fetching the file. <a href="blog.html">Back to all posts</a>.']);
+      });
+  }
+
+  function paintPost(file, md){
+    var parsed = parseFrontMatter(md);
+    var fileMeta = metaFromName(file);
+    var title = parsed.meta.title || fileMeta.title;
+    var date  = parsed.meta.date  || fileMeta.date;
+
+    var body = parsed.body;
+    // ensure the article has a clear title even if the markdown has no H1
+    if(!/^\s*#\s+/.test(body)) body = '# ' + title + '\n\n' + body;
+
+    document.title = title + ' — Mohammad Elsharqawy';
+
+    var rendered = window.DOMPurify.sanitize(window.marked.parse(body));
+    content.innerHTML = '<article class="article">' +
+        '<a class="article-back" href="blog.html">← all posts</a>' +
+        (date ? '<div class="article-date">' + escapeHtml(fmtDate(date)) + '</div>' : '') +
+        '<div class="prose">' + rendered + '</div>' +
+      '</article>';
+  }
+
+  // ---- route ----
+  var p = new URLSearchParams(location.search).get('p');
+  if(p) renderPost(p); else renderList();
+})();
+</script>
+</body>
+</html>
