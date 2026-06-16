@@ -125,39 +125,37 @@
 </footer>
 
 <!-- ============================================================
-     BLOG — how it works
-     ------------------------------------------------------------
-     Drop markdown files into a  blog/  folder in this repo and they
-     show up here automatically. No build step, no config to edit.
+     BLOG — drop markdown files into the  blog/  folder and they
+     appear here automatically. No build step, no manifest to edit.
 
-     • Filename becomes the title:   building-reliable-systems.md
-       → "Building Reliable Systems"
-     • Optional date prefix:         2026-06-16-building-systems.md
-       → shows the date, sorts newest first
-     • Optional front matter at the top of a file:
-         ---
-         title: A Nicer Title
-         date: 2026-06-16
-         ---
-       (overrides the filename-derived title/date)
+       • Filename = title:       building-systems.md  →  "Building Systems"
+       • Optional date prefix:   2026-06-16-building-systems.md  (sorts newest first)
+       • Optional front matter at the very top of a file:
+             ---
+             title: A Nicer Title
+             date: 2026-06-16
+             ---
 
-     Auto-detects your repo when hosted on *.github.io. If you use a
-     CUSTOM DOMAIN, set OWNER and REPO below by hand.
+     LOCAL PREVIEW: serve the folder, don't open the file directly.
+        python -m http.server
+        # then visit  http://localhost:8000/blog.html
+     (Browsers block reading a folder over file://, so double-clicking
+      this file won't list posts — use a server, or push to Pages.)
+
+     HOSTING: works on GitHub Pages as-is. On *.github.io the repo is
+     auto-detected. Using a CUSTOM DOMAIN? set OWNER / REPO just below.
      ============================================================ -->
 <script>
 (function(){
-  // ---- config (leave blank to auto-detect on github.io) ----
-  var OWNER = "";   // e.g. "MohammadElsharqawy"
-  var REPO  = "";   // e.g. "MohammadElsharqawy.github.io"
-  var DIR   = "blog";
-  var BRANCH = "";  // blank = default branch
-  // ----------------------------------------------------------
+  // optional — only needed for listing on a custom domain (not *.github.io)
+  var OWNER = "";   var REPO = "";   var DIR = "blog";   var BRANCH = "";
 
   var content = document.getElementById('content');
+  var rateLimited = false;
 
   function detect(){
-    var owner = OWNER, repo = REPO, host = location.hostname;
-    if((!owner || !repo) && /\.github\.io$/i.test(host)){
+    var owner=OWNER, repo=REPO, host=location.hostname;
+    if((!owner||!repo) && /\.github\.io$/i.test(host)){
       owner = owner || host.split('.')[0];
       var seg = location.pathname.split('/').filter(Boolean)[0];
       repo = repo || (seg && !/\.html?$/i.test(seg) ? seg : host);
@@ -165,183 +163,125 @@
     return {owner:owner, repo:repo};
   }
   var cfg = detect();
+  function apiBase(){ return 'https://api.github.com/repos/'+cfg.owner+'/'+cfg.repo; }
+  function refQ(){ return BRANCH ? ('?ref='+encodeURIComponent(BRANCH)) : ''; }
 
-  function apiBase(){ return 'https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo; }
-  function refQ(){ return BRANCH ? ('?ref=' + encodeURIComponent(BRANCH)) : ''; }
+  function fmtDate(d){ if(!d) return ''; var dt=new Date(d+(d.length===10?'T00:00:00':'')); if(isNaN(dt)) return d; return dt.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}); }
+  function titleCase(s){ return s.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim().replace(/\b\w/g,function(c){return c.toUpperCase();}); }
+  function metaFromName(name){ var base=name.replace(/\.md$/i,''); var date=null,rest=base; var m=base.match(/^(\d{4}-\d{2}-\d{2})[-_ ]+(.*)$/); if(m){date=m[1];rest=m[2];} return {file:name,title:titleCase(rest),date:date}; }
+  function escapeHtml(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function sortPosts(p){ var dated=p.filter(function(x){return x.date;}), undated=p.filter(function(x){return !x.date;}); dated.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;}); undated.sort(function(a,b){return a.title.toLowerCase()<b.title.toLowerCase()?-1:1;}); return dated.concat(undated); }
+  function parseFrontMatter(md){ var meta={}, body=md; var fm=md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/); if(fm){ body=md.slice(fm[0].length); fm[1].split('\n').forEach(function(line){ var i=line.indexOf(':'); if(i>-1){ var k=line.slice(0,i).trim().toLowerCase(); var v=line.slice(i+1).trim().replace(/^["']|["']$/g,''); if(v) meta[k]=v; } }); } return {meta:meta,body:body}; }
 
-  function fmtDate(d){
-    if(!d) return '';
-    var dt = new Date(d + (d.length === 10 ? 'T00:00:00' : ''));
-    if(isNaN(dt)) return d;
-    return dt.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
-  }
-
-  function titleCase(s){
-    return s.replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim()
-            .replace(/\b\w/g, function(c){ return c.toUpperCase(); });
-  }
-
-  function metaFromName(name){
-    var base = name.replace(/\.md$/i,'');
-    var date = null, rest = base;
-    var m = base.match(/^(\d{4}-\d{2}-\d{2})[-_ ]+(.*)$/);
-    if(m){ date = m[1]; rest = m[2]; }
-    return { file:name, title:titleCase(rest), date:date };
-  }
-
-  function parseFrontMatter(md){
-    var meta = {};
-    var fm = md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-    var body = md;
-    if(fm){
-      body = md.slice(fm[0].length);
-      fm[1].split('\n').forEach(function(line){
-        var i = line.indexOf(':');
-        if(i > -1){
-          var k = line.slice(0,i).trim().toLowerCase();
-          var v = line.slice(i+1).trim().replace(/^["']|["']$/g,'');
-          if(v) meta[k] = v;
-        }
+  // ---- discovery: try a real directory listing first (works on local
+  //      servers + many hosts), then an optional manifest, then GitHub API ----
+  function tryAutoindex(){
+    return fetch(DIR+'/',{cache:'no-store'}).then(function(r){
+      if(!r.ok) return null;
+      return r.text().then(function(text){
+        var doc=new DOMParser().parseFromString(text,'text/html');
+        var names=Array.prototype.slice.call(doc.querySelectorAll('a[href]'))
+          .map(function(a){return a.getAttribute('href');})
+          .filter(function(h){return h && /\.md$/i.test(h);})
+          .map(function(h){return decodeURIComponent(h.split('/').pop().split('?')[0]);})
+          .filter(function(n){return n && n.toLowerCase()!=='readme.md';});
+        names=names.filter(function(n,i){return names.indexOf(n)===i;});
+        return names.length ? names.map(metaFromName) : null;
       });
-    }
-    return { meta:meta, body:body };
+    }).catch(function(){return null;});
+  }
+  function tryManifest(){
+    return fetch(DIR+'/posts.json',{cache:'no-store'}).then(function(r){
+      if(!r.ok) return null;
+      return r.json().then(function(data){
+        var arr=Array.isArray(data)?data:(data.posts||[]);
+        if(!arr.length) return null;
+        return arr.map(function(it){ return typeof it==='string'?metaFromName(it):{file:it.file,title:it.title||metaFromName(it.file).title,date:it.date||metaFromName(it.file).date}; });
+      });
+    }).catch(function(){return null;});
+  }
+  function tryGitHubAPI(){
+    if(!cfg.owner||!cfg.repo) return Promise.resolve(null);
+    return fetch(apiBase()+'/contents/'+DIR+refQ(),{headers:{Accept:'application/vnd.github+json'}}).then(function(r){
+      if(r.status===403){ rateLimited=true; return null; }
+      if(!r.ok) return null;
+      return r.json().then(function(items){
+        if(!Array.isArray(items)) return null;
+        var posts=items.filter(function(f){return f.type==='file'&&/\.md$/i.test(f.name)&&f.name.toLowerCase()!=='readme.md';}).map(function(f){return metaFromName(f.name);});
+        return posts.length?posts:[];
+      });
+    }).catch(function(){return null;});
   }
 
-  function escapeHtml(s){ return s.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-
-  // ---- library loading (only when rendering a post) ----
-  function loadScript(src){
-    return new Promise(function(res, rej){
-      var s = document.createElement('script'); s.src = src;
-      s.onload = function(){ res(); }; s.onerror = function(){ rej(); };
-      document.head.appendChild(s);
+  // ---- read one post: static file first (local + Pages), API as fallback ----
+  function fetchRaw(file){
+    return fetch(DIR+'/'+encodeURIComponent(file),{cache:'no-store'}).then(function(r){
+      if(r.ok) return r.text();
+      throw 0;
+    }).catch(function(){
+      if(cfg.owner&&cfg.repo){
+        return fetch(apiBase()+'/contents/'+DIR+'/'+encodeURIComponent(file)+refQ(),{headers:{Accept:'application/vnd.github.raw'}}).then(function(r){ if(!r.ok) throw {missing:true}; return r.text(); });
+      }
+      throw {missing:true};
     });
   }
-  function ensureLibs(){
-    var jobs = [];
-    if(!window.marked) jobs.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js'));
-    if(!window.DOMPurify) jobs.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js'));
-    return Promise.all(jobs);
-  }
 
-  // ---- states ----
-  function showState(title, lines){
-    content.innerHTML = '<div class="state"><div class="box"><h3>' + title + '</h3>' +
-      lines.map(function(l){ return '<p>' + l + '</p>'; }).join('') + '</div></div>';
-  }
-  function showSkeleton(){
-    var rows = '';
-    for(var i=0;i<3;i++) rows += '<div class="skel-row"><div class="skeleton a"></div><div class="skeleton b"></div></div>';
-    content.innerHTML = '<div class="posts" style="border-top:none;margin-top:0;padding-top:8px">' + rows + '</div>';
-  }
+  function loadScript(src){ return new Promise(function(res,rej){ var s=document.createElement('script'); s.src=src; s.onload=function(){res();}; s.onerror=function(){rej();}; document.head.appendChild(s); }); }
+  function ensureLibs(){ var j=[]; if(!window.marked) j.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js')); if(!window.DOMPurify) j.push(loadScript('https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js')); return Promise.all(j); }
 
-  function notConfigured(){
-    showState('Set your repo to load posts', [
-      'This page auto-detects your repository when it&rsquo;s served from a <code>*.github.io</code> address. It looks like that didn&rsquo;t resolve (you may be opening the file directly or using a custom domain).',
-      'Open <code>blog.html</code> and set <code>OWNER</code> and <code>REPO</code> near the bottom, then reload.'
-    ]);
-  }
-
-  // ---- list view ----
-  function renderList(){
-    if(!cfg.owner || !cfg.repo){ notConfigured(); return; }
-    var cacheKey = 'blog-list:' + cfg.owner + '/' + cfg.repo;
-    var cached = sessionStorage.getItem(cacheKey);
-    if(cached){ try{ paintList(JSON.parse(cached)); return; }catch(e){} }
-
-    showSkeleton();
-    fetch(apiBase() + '/contents/' + DIR + refQ(), { headers:{ 'Accept':'application/vnd.github+json' } })
-      .then(function(r){
-        if(r.status === 404) return [];
-        if(r.status === 403) throw {rate:true};
-        if(!r.ok) throw {status:r.status};
-        return r.json();
-      })
-      .then(function(items){
-        var posts = (Array.isArray(items) ? items : [])
-          .filter(function(f){ return f.type === 'file' && /\.md$/i.test(f.name) && f.name.toLowerCase() !== 'readme.md'; })
-          .map(function(f){ return metaFromName(f.name); })
-          .sort(function(a,b){
-            var ka = a.date || a.title.toLowerCase();
-            var kb = b.date || b.title.toLowerCase();
-            return ka < kb ? 1 : ka > kb ? -1 : 0;
-          });
-        try{ sessionStorage.setItem(cacheKey, JSON.stringify(posts)); }catch(e){}
-        paintList(posts);
-      })
-      .catch(function(err){
-        if(err && err.rate) showState('GitHub rate limit reached', ['The unauthenticated GitHub API allows ~60 requests per hour. Give it a few minutes and reload.']);
-        else showState('Couldn&rsquo;t load posts', ['Couldn&rsquo;t reach the GitHub API for <code>' + cfg.owner + '/' + cfg.repo + '</code>. Check the repo is public and reload.']);
-      });
-  }
+  function showSkeleton(){ var rows=''; for(var i=0;i<3;i++) rows+='<div class="skel-row"><div class="skeleton a"></div><div class="skeleton b"></div></div>'; content.innerHTML='<div class="posts" style="border-top:none;margin-top:0;padding-top:8px">'+rows+'</div>'; }
+  function showState(title,lines){ content.innerHTML='<div class="state"><div class="box"><h3>'+title+'</h3>'+lines.map(function(l){return '<p>'+l+'</p>';}).join('')+'</div></div>'; }
 
   function paintList(posts){
-    if(!posts.length){
-      showState('No posts yet', [
-        'Add a markdown file to the <code>blog/</code> folder of your repo and it&rsquo;ll appear here automatically.',
-        'Try a file like <code>blog/2026-06-16-hello-world.md</code> — the date sorts it, the rest becomes the title.'
-      ]);
-      return;
-    }
-    var html = '<div class="posts">';
+    var html='<div class="posts">';
     posts.forEach(function(p){
-      var meta = p.date ? fmtDate(p.date) : 'Post';
-      html += '<a class="post-row" href="?p=' + encodeURIComponent(p.file) + '">' +
-                '<div class="meta">' + escapeHtml(meta) + '</div>' +
-                '<h2>' + escapeHtml(p.title) + '<span class="arrow">→</span></h2>' +
-              '</a>';
+      var meta=p.date?fmtDate(p.date):'Post';
+      html+='<a class="post-row" href="?p='+encodeURIComponent(p.file)+'"><div class="meta">'+escapeHtml(meta)+'</div><h2>'+escapeHtml(p.title)+'<span class="arrow">&rarr;</span></h2></a>';
     });
-    html += '</div>';
-    content.innerHTML = html;
+    html+='</div>';
+    content.innerHTML=html;
+  }
+  function paintEmpty(){
+    if(rateLimited){ showState('Taking a breather',['The list will refresh shortly &mdash; the anonymous GitHub API allows about 60 requests an hour. Reload in a few minutes.']); return; }
+    showState('No posts yet',['Add a markdown file to the <code>blog/</code> folder and it shows up here automatically.','Try <code>blog/2026-06-16-hello-world.md</code> &mdash; the date sorts it newest-first, the rest becomes the title.']);
+  }
+  function localHint(){
+    showState('Preview with a local server',['Browsers can&rsquo;t read a folder over <code>file://</code>, so opening this page by double-clicking won&rsquo;t list posts.','In this folder run <code>python -m http.server</code>, then open <code>http://localhost:8000/blog.html</code>. Once it&rsquo;s on GitHub Pages it works with no server.']);
   }
 
-  // ---- article view ----
-  function renderPost(file){
-    if(!cfg.owner || !cfg.repo){ notConfigured(); return; }
-    content.innerHTML = '<div class="article"><a class="article-back" href="blog.html">← all posts</a>' +
-      '<div class="posts" style="border-top:none;margin-top:0;padding:0"><div class="skel-row" style="border:none"><div class="skeleton a"></div><div class="skeleton b" style="margin-top:12px"></div></div></div></div>';
+  function loadList(){
+    showSkeleton();
+    tryAutoindex()
+      .then(function(p){ return p || tryManifest(); })
+      .then(function(p){ return p || tryGitHubAPI(); })
+      .then(function(p){
+        if(p && p.length){ paintList(sortPosts(p)); return; }
+        if(location.protocol==='file:') localHint(); else paintEmpty();
+      })
+      .catch(function(){ if(location.protocol==='file:') localHint(); else paintEmpty(); });
+  }
 
-    var url = apiBase() + '/contents/' + DIR + '/' + encodeURIComponent(file) + refQ();
-    fetch(url, { headers:{ 'Accept':'application/vnd.github.raw' } })
-      .then(function(r){
-        if(r.status === 404) throw {missing:true};
-        if(r.status === 403) throw {rate:true};
-        if(!r.ok) throw {status:r.status};
-        return r.text();
-      })
-      .then(function(md){
-        return ensureLibs().then(function(){ paintPost(file, md); });
-      })
+  function renderPost(file){
+    content.innerHTML='<div class="article"><a class="article-back" href="blog.html">&larr; all posts</a><div class="posts" style="border-top:none;margin-top:0;padding:0"><div class="skel-row" style="border:none"><div class="skeleton a"></div><div class="skeleton b" style="margin-top:12px"></div></div></div></div>';
+    fetchRaw(file).then(function(md){ return ensureLibs().then(function(){ paintPost(file,md); }); })
       .catch(function(err){
-        if(err && err.missing) showState('Post not found', ['Couldn&rsquo;t find <code>' + escapeHtml(file) + '</code> in the <code>blog/</code> folder. <a href="blog.html">Back to all posts</a>.']);
-        else if(err && err.rate) showState('GitHub rate limit reached', ['Give it a few minutes and reload. <a href="blog.html">Back to all posts</a>.']);
-        else showState('Couldn&rsquo;t load this post', ['Something went wrong fetching the file. <a href="blog.html">Back to all posts</a>.']);
+        if(location.protocol==='file:') return localHint();
+        if(err&&err.missing) showState('Post not found',['Couldn&rsquo;t find <code>'+escapeHtml(file)+'</code> in the <code>blog/</code> folder. <a href="blog.html">Back to all posts</a>.']);
+        else showState('Couldn&rsquo;t load this post',['Something went wrong fetching the file. <a href="blog.html">Back to all posts</a>.']);
       });
   }
-
-  function paintPost(file, md){
-    var parsed = parseFrontMatter(md);
-    var fileMeta = metaFromName(file);
-    var title = parsed.meta.title || fileMeta.title;
-    var date  = parsed.meta.date  || fileMeta.date;
-
-    var body = parsed.body;
-    // ensure the article has a clear title even if the markdown has no H1
-    if(!/^\s*#\s+/.test(body)) body = '# ' + title + '\n\n' + body;
-
-    document.title = title + ' — Mohammad Elsharqawy';
-
-    var rendered = window.DOMPurify.sanitize(window.marked.parse(body));
-    content.innerHTML = '<article class="article">' +
-        '<a class="article-back" href="blog.html">← all posts</a>' +
-        (date ? '<div class="article-date">' + escapeHtml(fmtDate(date)) + '</div>' : '') +
-        '<div class="prose">' + rendered + '</div>' +
-      '</article>';
+  function paintPost(file,md){
+    var parsed=parseFrontMatter(md), fileMeta=metaFromName(file);
+    var title=parsed.meta.title||fileMeta.title, date=parsed.meta.date||fileMeta.date;
+    var body=parsed.body;
+    if(!/^\s*#\s+/.test(body)) body='# '+title+'\n\n'+body;
+    document.title=title+' \u2014 Mohammad Elsharqawy';
+    var rendered=window.DOMPurify.sanitize(window.marked.parse(body));
+    content.innerHTML='<article class="article"><a class="article-back" href="blog.html">&larr; all posts</a>'+(date?'<div class="article-date">'+escapeHtml(fmtDate(date))+'</div>':'')+'<div class="prose">'+rendered+'</div></article>';
   }
 
-  // ---- route ----
-  var p = new URLSearchParams(location.search).get('p');
-  if(p) renderPost(p); else renderList();
+  var qp=new URLSearchParams(location.search).get('p');
+  if(qp) renderPost(qp); else loadList();
 })();
 </script>
 </body>
