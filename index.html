@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohammad Elsharqawy — Systems Reliability Research</title>
-<meta name="description" content="Mohammad Elsharqawy — Computer Engineering researcher working on system reliability and agentic SRE. PhD applicant.">
+<title>Mohammad Elsharqawy — Efficient, Reliable &amp; Scalable ML Systems</title>
+<meta name="description" content="Mohammad Elsharqawy — Computer Engineering researcher building efficient, reliable and scalable ML systems, with a focus on the reliability of cloud-scale infrastructure. PhD applicant.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap" rel="stylesheet">
@@ -106,7 +106,20 @@
   @media(max-width:430px){.telemetry{grid-template-columns:1fr;}}
 
   /* ---------- research focus ---------- */
-  .focus-lead{font-size:clamp(1.1rem,2vw,1.34rem);max-width:760px;line-height:1.6;margin:0 0 50px;color:var(--ink);}
+  .focus-lead{font-size:clamp(1.1rem,2vw,1.34rem);max-width:760px;line-height:1.6;margin:0 0 44px;color:var(--ink);}
+  .focus-lead a.easter{color:inherit;text-decoration:none;}
+  .focus-lead a.easter b{border-bottom:1px dashed rgba(37,54,222,.45);transition:border-color .15s,border-bottom-style .15s;}
+  .focus-lead a.easter:hover b{border-bottom-color:var(--signal);border-bottom-style:solid;}
+  .tablist{display:flex;gap:2px;flex-wrap:wrap;border-bottom:1px solid var(--line-strong);}
+  .tab{appearance:none;-webkit-appearance:none;background:none;border:none;cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:.88rem;font-weight:500;color:var(--ink-soft);padding:13px 18px;border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;align-items:center;gap:9px;transition:color .15s,border-color .15s;}
+  .tab .tnum{font-size:.72rem;color:var(--ink-faint);transition:color .15s;}
+  .tab:hover{color:var(--ink);}
+  .tab.is-active{color:var(--signal);border-bottom-color:var(--signal);}
+  .tab.is-active .tnum{color:var(--signal);}
+  .tabpanel{display:none;padding:30px 2px 4px;}
+  .tabpanel.is-active{display:block;}
+  .tabpanel h3{font-family:"Archivo",sans-serif;font-stretch:108%;font-weight:700;font-size:1.4rem;letter-spacing:-.015em;margin:0 0 12px;}
+  .tabpanel p{margin:0;max-width:720px;font-size:1.05rem;line-height:1.65;color:var(--ink-soft);}
   .focus-lead b{font-weight:600;color:var(--signal);}
   .focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
   .focus-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;position:relative;overflow:hidden;}
@@ -265,6 +278,10 @@
     .portrait-tag{justify-content:flex-start;}
   }
 
+  /* easter egg link — blends into the prose, faint cue on hover */
+  .easter{color:inherit;text-decoration:none;border-bottom:1px dotted transparent;transition:border-color .2s;}
+  .easter:hover{border-bottom-color:var(--ink-faint);}
+
   /* reduced motion */
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
   :focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px;}
@@ -287,7 +304,8 @@
     </nav>
     <div class="nav-right">
       <a href="blog.html" class="nav-cta">Blog</a>
-      <a href="https://drive.google.com/file/d/1WrRoNnq7aiswBOVURMIyg1x-JyBoP5Ha/view?usp=sharing" class="nav-cta">↓ CV</a>
+      <!-- TODO: replace with your CV file link -->
+      <a href="#" class="nav-cta">↓ CV</a>
     </div>
   </div>
 </header>
@@ -298,11 +316,9 @@
 <section class="hero">
   <div class="hero-top">
   <div class="hero-head">
-  <div class="hero-status"><span class="pulse"></span>Seeking PhD position · Systems &amp; Reliability · 2026 cycle</div>
+  <div class="hero-status"><span class="pulse"></span>Seeking PhD position · Efficient, Reliable &amp; Scalable ML Systems · 2026 cycle</div>
   <h1 class="display">Mohammad<br>Elsharqawy</h1>
-<p class="hero-thesis">
-  I build and study systems that <b>stay up</b>. My work sits where DevOps practice meets systems research, focusing on the <b>reliability</b> of cloud-scale infrastructure and on building <b>efficient and reliable systems for machine learning</b>.
-</p>
+  <p class="hero-thesis">I build and study systems that <b>stay up</b>. My work sits where DevOps practice meets systems research, focusing on the <b>reliability</b> of cloud-scale infrastructure and on building <b>efficient, reliable and scalable ML systems</b>.</p>
   </div><!-- /hero-head -->
 
   <aside class="hero-portrait">
@@ -341,7 +357,7 @@
     </div>
     <div class="cell">
       <div class="k">Focus</div>
-      <div class="v">Efficient & Reliable ML Systems<small>+ Cloud Infrastructure Reliability</small></div>
+      <div class="v">Efficient, Reliable &amp; Scalable ML Systems<small>+ Cloud Infrastructure Reliability</small></div>
     </div>
     <div class="cell">
       <div class="k">MSc · Computer Eng.</div>
@@ -357,53 +373,29 @@
 
 <!-- ============ RESEARCH FOCUS ============ -->
 <div class="wrap">
-
 <section id="research">
-
   <div class="sec-head"><span class="num">01</span><h2>Research focus</h2></div>
 
-  <p class="focus-lead">
-    Modern cloud systems fail in ways that are hard to predict and harder to recover from — misconfigurations, cross-system interactions, and cascading faults. 
-    I want to make these systems <a class="easter" href="https://www.youtube.com/watch?v=T_D3d1RWBrI" target="_blank" rel="noopener"><b>observably reliable</b></a>, and to study efficient and reliable systems for machine learning at scale.
-  </p>
+  <p class="focus-lead">Modern cloud systems fail in ways that are hard to predict and harder to recover from — misconfigurations, cross-system interactions, and cascading faults. I want to make these systems <a class="easter" href="https://www.youtube.com/watch?v=T_D3d1RWBrI&amp;t=69s" target="_blank" rel="noopener"><b>observably reliable</b></a>, and to study <b>efficient, reliable and scalable ML systems</b>.</p>
 
   <div class="focus-grid">
-
     <div class="focus-card">
-
       <span class="fkey">/01 · reliability</span>
-
       <h3>System reliability</h3>
-
       <p>Understanding and reducing failures at cloud and datacenter scale — configuration errors, fault recovery, and the interactions between services that cause real-world outages.</p>
-
     </div>
-
     <div class="focus-card">
-
       <span class="fkey">/02 · ML systems</span>
-
       <h3>Efficient ML infrastructure</h3>
-
-      <p>Designing and operating machine learning systems that are efficient, scalable, and reliable in production environments. Focused on improving performance, stability, and cost-effectiveness under real-world constraints.</p>
-
+      <p>Designing and operating machine learning systems that are efficient, scalable, and reliable in production environments — improving performance, stability, and cost-effectiveness under real-world constraints.</p>
     </div>
-
     <div class="focus-card">
-
       <span class="fkey">/03 · practice</span>
-
       <h3>From practice to research</h3>
-
       <p>Hands-on infrastructure — Kubernetes, GitOps, Terraform, CI/CD — grounds my research in the failure modes operators actually face, not abstractions.</p>
-
     </div>
-
   </div>
 
-</section>
-
-</div>
   <div class="uiuc-callout">
     <span class="badge">Now · UIUC</span>
     <p>As a <b>Research Intern at the University of Illinois Urbana-Champaign</b>, I work with <b><a href="https://tianyin.github.io/" target="_blank" rel="noopener">Prof. Tianyin Xu</a></b> on <b>system reliability and agentic SRE</b> — building toward infrastructure that can detect, reason about, and repair its own failures. Prof. Xu&rsquo;s group studies the reliability of cloud-scale systems.</p>
@@ -703,13 +695,13 @@
     <div class="skill-row">
       <div class="k">DevOps · Infrastructure</div>
       <div class="chips">
-        <span class="core">AWS</span><span class="core">Terraform</span><span class="core">Docker</span><span class="core">Kubernetes</span><span>Jenkins</span><span>GitHub Actions</span><span>Ansible</span><span>Argo CD</span><span>Linux</span><span>Bash</span><span>Git</span><span>Vim</span><span>Serverless</span>
+        <span class="core">AWS</span><span class="core">Terraform</span><span class="core">Docker</span><span class="core">Kubernetes</span><span>Jenkins</span><span>GitHub Actions</span><span>Ansible</span><span>Argo CD</span><span>Linux</span><span>Bash</span><span>Git</span><span>Serverless</span>
       </div>
     </div>
     <div class="skill-row">
       <div class="k">Languages</div>
       <div class="chips">
-        <span class="core">Python</span><span class="core">C / C++</span><span>Go</span><span>Java</span><span>JavaScript</span>
+        <span class="core">Python</span><span class="core">C / C++</span><span>Go</span><span>Java</span><span>JavaScript</span><span>VHDL</span>
       </div>
     </div>
     <div class="skill-row">
@@ -744,11 +736,11 @@
       </div>
       <div class="ach-item">
         <span class="mk">ICPC</span>
-        <span class="tx">Finalist, ACM-ICPC Egyptian Collegiate Programming Contest<small>Two consecutive years · 2021, 2022 ·</small></span>
+        <span class="tx">Finalist, ACM-ICPC Egyptian Collegiate Programming Contest<small>Two consecutive years · 2021, 2022</small></span>
       </div>
       <div class="ach-item">
         <span class="mk">2nd</span>
-        <span class="tx">2nd place, Tanta University Collegiate Programming Contest<small>2021 &amp; 2022 · 8th in 2020 ·</small></span>
+        <span class="tx">2nd place, Tanta University Collegiate Programming Contest<small>2021 &amp; 2022 · 8th in 2020</small></span>
       </div>
     </div>
 
@@ -774,8 +766,8 @@
 <section id="contact" class="contact">
   <div class="wrap">
     <div class="eyebrow">// open to collaboration</div>
-    <h2 class="display">Let&rsquo;s talk reliability.</h2>
-    <p class="lead">I&rsquo;m applying to PhD programs in computer systems and reliability. If your group works on dependable infrastructure, agentic operations, or cloud-scale systems, I&rsquo;d love to connect.</p>
+    <h2 class="display">Let&rsquo;s build systems that last</h2>
+    <p class="lead">I&rsquo;m applying to PhD programs in computer systems and ML systems. If your group works on efficient and scalable ML infrastructure, system reliability, or agentic operations, I&rsquo;d love to connect.</p>
 
     <div class="contact-rows">
       <a class="crow" href="mailto:mohammadelsharqawyegy@gmail.com">
@@ -792,7 +784,7 @@
       </a>
       <a class="crow" href="https://www.linkedin.com/in/mohammad-elsharqawy-a86991190/" target="_blank" rel="noopener">
         <span class="ck">LinkedIn</span>
-        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>Mohammad Elsharqawy</span>
+        <span class="cv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7.5 0h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-7.1c0-1.7-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8Z"/></svg>mohammad-elsharqawy</span>
       </a>
     </div>
 
